@@ -34,41 +34,36 @@ def findAllFactors(arg):
     return allFactors
 
 
-def getPrimeNumbers(n):
+def findPrimeNumbers(limit):
     """generate all primes smaller than or equal to n using Sieve of Eratosthenes"""
-    prime = [True for i in range(n + 1)]
-    p = 2
+    primeMask = [True for i in range(limit + 1)]
+    prime = 2
 
-    while p * p <= n:
-        if prime[p]:
-            # Update all multiples of p
-            for i in range(p * p, n + 1, p):
-                prime[i] = False
-        p += 1
+    while prime * prime <= limit:
+        if primeMask[prime]:
+            # Update all multiples of prime
+            for i in range(prime * prime, limit + 1, prime):
+                primeMask[i] = False
+        prime += 1
 
-    return [p for p in range(2, n + 1) if prime[p]]
+    return [x for x in range(2, limit + 1) if primeMask[x]]
 
 
-def findPrimeFactors(arg):
-    """find all the prime factors of a number
-    method: prime factorization by division"""
-    primeFactors = []
-    quotient = None
+def findPrimeFactors(arg, primes=None):
+    """find all the prime factors of a number using prime factorization by division"""
 
-    for num in getPrimeNumbers(arg):
-        quotient = arg / num
+    if primes is None:
+        primes = []
 
-        if isPrime(quotient):
-            primeFactors.append(num)
+    for num in range(2, int(arg ** 0.5) + 1):
+        if arg % num == 0:
+            primes.append(num)
             break
-        else:
-            if arg % num == 0:
-                primeFactors.append(num)
-                break
+    else:
+        primes.append(arg)
+        return primes
 
-    # print(findPrimeFactors(quotient))
-
-    return primeFactors
+    return findPrimeFactors(arg / num, primes)
 
 
 if __name__ == '__main__':
@@ -76,8 +71,11 @@ if __name__ == '__main__':
 
     start = time.time()
 
-    print(findPrimeFactors(13195))  # 600851475143 13195
-    # print(getPrimeNumbers(13195))  # 600851475143 13195
+    # 600851475143 13195
+    # print(isPrime(13195))
+    # print(findAllFactors(13195))
+    # print(findPrimeNumbers(13195))
+    print(findPrimeFactors(600851475143))
 
     end = time.time()
     print(f"{end - start} seconds")
