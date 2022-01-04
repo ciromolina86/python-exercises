@@ -10,22 +10,17 @@ What is the largest prime factor of the number 600851475143 ?
 
 def isPrime(arg):
     """check if number is prime"""
-
-    # prime number is greater than 1
-    if abs(arg) > 1:
-        # special case: number=2
-        if abs(arg) == 2:
-            return True
-
-        # check that cannot be written as the product of two smaller natural numbers
-        for i in range(2, arg):
+    # zero and one are not prime numbers
+    if abs(arg) == 0 or abs(arg) == 1:
+        return False
+    # special case: two
+    elif abs(arg) == 2:
+        return True
+    else:
+        for i in range(2, int(arg ** 0.5) + 1):
             if arg % i == 0:
                 return False
-
         return True
-
-    else:
-        return False
 
 
 def findAllFactors(arg):
@@ -39,21 +34,50 @@ def findAllFactors(arg):
     return allFactors
 
 
-def findPrimeFactors(arg):
-    """find all the prime factors of a number"""
-    allFactors = findAllFactors(arg)
-    primeFactors = []
+def getPrimeNumbers(n):
+    """generate all primes smaller than or equal to n using Sieve of Eratosthenes"""
+    prime = [True for i in range(n + 1)]
+    p = 2
 
-    for num in allFactors:
-        if isPrime(num):
+    while p * p <= n:
+        if prime[p]:
+            # Update all multiples of p
+            for i in range(p * p, n + 1, p):
+                prime[i] = False
+        p += 1
+
+    return [p for p in range(2, n + 1) if prime[p]]
+
+
+def findPrimeFactors(arg):
+    """find all the prime factors of a number
+    method: prime factorization by division"""
+    primeFactors = []
+    quotient = None
+
+    for num in getPrimeNumbers(arg):
+        quotient = arg / num
+
+        if isPrime(quotient):
             primeFactors.append(num)
+            break
+        else:
+            if arg % num == 0:
+                primeFactors.append(num)
+                break
+
+    # print(findPrimeFactors(quotient))
 
     return primeFactors
 
 
 if __name__ == '__main__':
     import time
+
     start = time.time()
-    print(max(findPrimeFactors(600851475143)))
+
+    print(findPrimeFactors(13195))  # 600851475143 13195
+    # print(getPrimeNumbers(13195))  # 600851475143 13195
+
     end = time.time()
-    print(f"{end}-{start} seconds")
+    print(f"{end - start} seconds")
