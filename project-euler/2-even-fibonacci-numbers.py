@@ -30,7 +30,7 @@ def isOdd(arg):
     return not isEven(arg)
 
 
-def getFibonaciSequence(maxNum):
+def getFibonacciSequence(maxNum):
     """get a sequence of Fibonacci numbers until a max value"""
     seq = [1, 2]
     lastNumber = 0
@@ -45,7 +45,7 @@ def getFibonaciSequence(maxNum):
 
 
 if __name__ == '__main__':
-    fibonacciSeq = getFibonaciSequence(4_000_000)
+    fibonacciSeq = getFibonacciSequence(4_000_000)
     sumOfEven = 0
 
     for num in fibonacciSeq:
