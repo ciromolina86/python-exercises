@@ -29,7 +29,7 @@ if __name__ == '__main__':
     multiplesOf3Or5 = []
     sumOfAllMultiplesOf3Or5 = 0
 
-    for num in range(1000 + 1):
+    for num in range(1000):
         if isMultipleOf3(num) or isMultipleOf5(num):
             multiplesOf3Or5.append(num)
 
