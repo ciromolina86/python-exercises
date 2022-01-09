@@ -27,13 +27,12 @@ def isPrime(arg):
 
 def primeNumberGenerator():
     """generate an infinite sequence of prime numbers"""
-    num = 3
-    yield 2
+    number = 2
 
     while True:
-        if isPrime(num):
-            yield num
-        num += 2
+        if isPrime(number):
+            yield number
+        number += 1
 
 
 if __name__ == '__main__':
@@ -42,8 +41,8 @@ if __name__ == '__main__':
     start = time.time()
 
     prime = primeNumberGenerator()
-    nth = 10001
-    for i in range(1, nth+1):
+    nth = 100001
+    for i in range(1, nth + 1):
         num = next(prime)
         if i == nth:
             print(f'{i}th prime = {num}')
