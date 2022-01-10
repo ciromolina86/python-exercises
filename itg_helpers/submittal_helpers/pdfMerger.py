@@ -1,5 +1,5 @@
 import PyPDF4
-
+from utils import getLocalFileNames
 from PyPDF4 import PdfFileReader, PdfFileWriter
 
 
@@ -18,5 +18,5 @@ def merge_pdfs(paths, output):
 
 
 if __name__ == '__main__':
-    paths = ['C:\\Users\\cmolina\\Downloads\\Test document page 1.pdf', 'C:\\Users\\cmolina\\Downloads\\Test document page 2.pdf', 'C:\\Users\\cmolina\\Downloads\\Test document page 3.pdf']
-    merge_pdfs(paths, output='C:\\Users\\cmolina\\Downloads\\Test document merged.pdf')
+    paths = getLocalFileNames('C:\\Users\\cmolina\\Downloads\\cover sheets')
+    merge_pdfs(paths, output='C:\\Users\\cmolina\\Downloads\\cover sheets\\cover sheets merged.pdf')
