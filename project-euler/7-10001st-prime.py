@@ -6,6 +6,7 @@ By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13, we can see that 
 
 What is the 10 001st prime number?
 """
+import math
 
 
 def isPrime(arg):
@@ -35,17 +36,77 @@ def primeNumberGenerator():
         number += 1
 
 
+def sieveOfEratosthenes(n=11):
+    """
+    The sieve of Eratosthenes: find all the prime numbers less than or equal to n
+
+    :param n: an integer n > 1
+    :return: all prime numbers from 2 through n.
+    """
+    sieve = [True for x in range(n + 1)]  # prime number mask
+    sieve[0] = sieve[1] = False  # 0 and 1 are not prime numbers
+
+    i = 2
+    while i ** 2 <= n:
+        if sieve[i]:
+            for j in range(i ** 2, n + 1, i):
+                sieve[j] = False
+        i += 1
+
+    return [i for i in range(n + 1) if sieve[i]]
+
+
+def sieveOfAtkin(limit=10):
+    """
+    The sieve of Atkin: find all the prime numbers less than or equal to n
+
+    :param limit: an integer n > 1
+    :return: all prime numbers from 2 through n.
+    """
+    sieve = [False] * limit
+
+    x = 1
+    while x * x < limit:
+        y = 1
+        while y * y < limit:
+            n = (4 * x * x) + (y * y)
+            if n <= limit and (n % 60 == 1 or n % 60 == 5):
+                sieve[n] ^= True
+
+            n = (3 * x * x) + (y * y)
+            if n <= limit and n % 60 == 7:
+                sieve[n] ^= True
+
+            n = (3 * x * x) - (y * y)
+            if x > y and n <= limit and n % 60 == 11:
+                sieve[n] ^= True
+            y += 1
+        x += 1
+
+    r = 5
+    while r * r < limit:
+        if sieve[r]:
+            for i in range(r * r, limit, r * r):
+                sieve[i] = False
+        r += 1
+
+    return [2, 3, 5] + [i for i in range(5, limit) if sieve[i]]
+
+
 if __name__ == '__main__':
     import time
 
     start = time.time()
 
-    prime = primeNumberGenerator()
-    nth = 100001
-    for i in range(1, nth + 1):
-        num = next(prime)
-        if i == nth:
-            print(f'{i}th prime = {num}')
+    # print(sieveOfEratosthenes(1000000))
+    print(sieveOfAtkin(1000000))
+
+    # prime = primeNumberGenerator()
+    # nth = 100001
+    # for i in range(1, nth + 1):
+    #     num = next(prime)
+    #     if i == nth:
+    #         print(f'{i}th prime = {num}')
 
     end = time.time()
-    print(f"{end - start} seconds")
+    print(f"{(end - start):.6f} seconds")
