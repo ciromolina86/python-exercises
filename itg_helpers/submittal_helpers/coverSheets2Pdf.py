@@ -51,6 +51,8 @@ def printWorksheets(srcFileName, dstDirName):
 
         printWorkbook(dstFileName, dstDirName)
 
+    os.startfile(dstDirName)
+
 
 if __name__ == '__main__':
     srcFileName = 'C:\\Users\\cmolina\\Downloads\\test spreadsheet.xlsx'
