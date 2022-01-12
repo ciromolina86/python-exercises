@@ -10,7 +10,7 @@ if __name__ == '__main__':
     # printWorksheets(srcFileName, dstDirName)
 
     # step 2: remove .xlsx files
-    removeFilesWith(dstDirName)
+    # removeFilesWith(dstDirName)
 
     # step 3: merge all pdf files into a single file
     files = getLocalFileNames('C:\\Users\\cmolina\\Downloads\\submittal\\Cover-Sheet')

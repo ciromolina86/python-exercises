@@ -17,7 +17,7 @@ if __name__ == '__main__':
                 retries += 1
 
         except:
-            pass
+            retries += 1
         
         finally:
             print(retries)

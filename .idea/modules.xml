@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../my-scripts/.idea/my-scripts.iml" filepath="$PROJECT_DIR$/../my-scripts/.idea/my-scripts.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/python-exercises.iml" filepath="$PROJECT_DIR$/.idea/python-exercises.iml" />
     </modules>
   </component>
