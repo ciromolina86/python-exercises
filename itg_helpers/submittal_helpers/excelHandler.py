@@ -54,8 +54,14 @@ def printWorksheets(srcFileName, dstDirName):
     os.startfile(dstDirName)
 
 
+def getSheetNames(srcFileName: str) -> list:
+    wb = readWorkbook(srcFileName)
+
+    return wb.sheetnames
+
+
 if __name__ == '__main__':
     srcFileName = 'C:\\Users\\cmolina\\Downloads\\test spreadsheet.xlsx'
     dstDirName = 'C:\\Users\\cmolina\\Downloads\\submittal\\cover sheets'
 
-    printWorksheets(srcFileName, dstDirName)
+    # printWorksheets(srcFileName, dstDirName)

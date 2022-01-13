@@ -1,19 +1,24 @@
-from coverSheets2Pdf import printWorksheets, printWorkbook
-from utils import getLocalFileNames, removeFilesWith, sortFileNames
-from pdfMerger import merge_pdfs
-
+from excelHandler import *
+from utils import *
+from pdfHandler import *
 
 if __name__ == '__main__':
-    # step 1: print all cover sheets to pdf
-    srcFileName = 'C:\\Users\\cmolina\\Downloads\\submittal\\Cover-Sheet-PLC3-Network-OK.xlsx'
-    dstDirName = 'C:\\Users\\cmolina\\Downloads\\submittal\\Cover-Sheet'
-    # printWorksheets(srcFileName, dstDirName)
+    coverSheetsPath = 'C:\\Users\\cmolina\\Downloads\\submittal\\Cover-Sheet'
+    submittalPath = 'C:\\Users\\cmolina\\Downloads\\submittal'
 
-    # step 2: remove .xlsx files
-    # removeFilesWith(dstDirName)
+    # step 1: print all cover sheets to pdf manually
+    pass
 
-    # step 3: merge all pdf files into a single file
-    files = getLocalFileNames('C:\\Users\\cmolina\\Downloads\\submittal\\Cover-Sheet')
-    sortedFiles = sortFileNames(files)
-    # merge_pdfs(sortedFiles, output='C:\\Users\\cmolina\\Downloads\\submittal\\Cover-Sheet\\submittal merged.pdf')
+    # step 2: split the cover sheets pdf file into separate pdf files
+    split_pdf(fileName=f'{submittalPath}\\Cover-Sheet-PLC3-network.pdf',
+              dstDirName=coverSheetsPath)
 
+    # step 3: rename all the cover sheets pdf with sheet names
+    rename_pdfs(srcDirName=coverSheetsPath,
+                newNames=getSheetNames(f'{submittalPath}\\Cover-Sheet-PLC3-network.xlsx'))
+
+    # step 4: merge all pdf files into a single file
+    sortedFiles = sortFileNames(fileNames=getLocalFileNames(coverSheetsPath),
+                                by=getNumberHead)
+    merge_pdfs(srcFileNames=sortedFiles,
+               dstFileName=f'{submittalPath}\\cover sheets merged.pdf')

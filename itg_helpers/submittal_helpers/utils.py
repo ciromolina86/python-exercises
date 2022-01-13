@@ -1,4 +1,5 @@
 import os
+import re
 
 
 def getLocalFileNames(dirName):
@@ -56,32 +57,58 @@ def removeFilesWith(dirName, suffix='.xlsx'):
             os.unlink(file)
 
 
-def byFileName(path):
+def getNumberTail(fileName):
     """
 
-    :param path:
+    :param fileName:
     :return:
     """
-    _, fileName = os.path.split(path)
+    _fileName, _ = os.path.splitext(fileName)
 
-    return fileName
+    return int(_fileName.split('---')[-1])
 
 
-def sortFileNames(fileNames, asc=True):
+def getNumberHead(fileName):
     """
 
+    :param fileName:
+    :return:
+    """
+    pattern = '([0-9]+).([0-9]+).([0-9]+)'
+    result = re.search(pattern, fileName)
+    idx1, idx2, idx3 = result.group(1), result.group(2), result.group(3)
+
+    return int(idx1), int(idx2), int(idx3)
+
+
+def sortFileNames(fileNames, asc=True, by=None):
+    """
+
+    :param by:
     :param fileNames:
     :param asc:
     :return:
     """
-    return sorted(fileNames, key=byFileName, reverse=not asc)
+    return sorted(fileNames, key=by, reverse=not asc)
+
+
+def renameFile(srcFileName, dstFileName):
+    """
+
+    :param srcFileName:
+    :param dstFileName:
+    :return:
+    """
+    os.rename(srcFileName, dstFileName)
 
 
 if __name__ == '__main__':
     # fileName = 'C:\\Users\\cmolina\\Downloads\\test spreadsheet.xlsx'
     # dirName, _ = os.path.split(fileName)
-    dirName = 'C:\\Users\\cmolina\\Downloads\\v4'
+    dirName = 'C:\\Users\\cmolina\\Downloads\\submittal\\Cover-Sheet'
 
     files = getLocalFileNames(dirName)
-    sortedFiles = sortFileNames(files)
-    print(sortedFiles)
+    sortedFiles = sortFileNames(files, by=getNumberHead)
+
+    for f in sortedFiles:
+        print(f)
