@@ -36,12 +36,12 @@ def getNumProduct(nums):
     return math.prod(nums)
 
 
-def getLargestProductDigits(serie: str, numDigits: int = 4):
+def getLargestProductDigits(series: str, numDigits: int = 4):
     number = 0
     largestProduct = 0
 
-    for idx in range(len(serie)):
-        num = int(serie[idx:idx + numDigits])
+    for idx in range(len(series)):
+        num = int(series[idx:idx + numDigits])
         prod = getNumProduct([int(i) for i in str(num)])
 
         if prod > largestProduct:
@@ -54,7 +54,7 @@ def getLargestProductDigits(serie: str, numDigits: int = 4):
 if __name__ == '__main__':
     start = time.time()
 
-    serie = '73167176531330624919225119674426574742355349194934' \
+    series = '73167176531330624919225119674426574742355349194934' \
             '96983520312774506326239578318016984801869478851843' \
             '85861560789112949495459501737958331952853208805511' \
             '12540698747158523863050715693290963295227443043557' \
@@ -76,7 +76,7 @@ if __name__ == '__main__':
             '71636269561882670428252483600823257530420752963450'
 
     numberOfDigits = 13
-    number, product = getLargestProductDigits(serie=serie, numDigits=numberOfDigits)
+    number, product = getLargestProductDigits(series=series, numDigits=numberOfDigits)
     print(f'the greatest product of {numberOfDigits} adjacent numbers is {product}')
 
     end = time.time()
