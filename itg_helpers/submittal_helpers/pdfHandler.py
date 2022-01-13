@@ -56,7 +56,7 @@ def rename_pdfs(srcDirName: str, newNames: list):
     else:
         print(f"files and names lengths don't match")
 
-    os.startfile(dstDirName)
+    os.startfile(srcDirName)
 
 
 if __name__ == '__main__':
