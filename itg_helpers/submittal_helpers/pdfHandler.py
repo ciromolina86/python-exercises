@@ -1,19 +1,42 @@
-import os.path
+import os
 import time
 
-from PyPDF4 import PdfFileReader, PdfFileWriter
+from PyPDF4 import PdfFileReader, PdfFileWriter, PdfFileMerger
 from utils import *
 from excelHandler import *
+
+
+def merge_pdfs2(srcFileNames, dstFileName):
+    pdf_merger = PdfFileMerger()
+
+    for path in srcFileNames:
+        _, fileName = os.path.split(path)
+        fileName, _ = os.path.splitext(fileName)
+        fileName = ' '.join(fileName.split()[1:])
+
+        pdf_merger.append(fileobj=path, bookmark=fileName, pages=None, import_bookmarks=False)
+
+    # Write out the merged PDF
+    with open(dstFileName, 'wb') as out:
+        pdf_merger.write(out)
 
 
 def merge_pdfs(srcFileNames, dstFileName):
     pdf_writer = PdfFileWriter()
 
     for path in srcFileNames:
+        _, fileName = os.path.split(path)
+        fileName, _ = os.path.splitext(fileName)
+
         pdf_reader = PdfFileReader(path)
+
         for page in range(pdf_reader.getNumPages()):
             # Add each page to the writer object
             pdf_writer.addPage(pdf_reader.getPage(page))
+
+        # if 'coversheet' in fileName.lower():
+        fileName = ' '.join(fileName.split()[1:])
+        pdf_writer.addBookmark(title=fileName, pagenum=pdf_writer.getNumPages() - 1, parent=None)
 
     # Write out the merged PDF
     with open(dstFileName, 'wb') as out:
@@ -44,31 +67,19 @@ def split_pdf(fileName, dstDirName):
     os.startfile(dstDirName)
 
 
-def rename_pdfs(srcDirName: str, newNames: list):
-    fileNames = sortFileNames(getLocalFileNames(srcDirName), by=getNumberTail)
-
-    if len(fileNames) == len(newNames):
-        for i in range(len(fileNames)):
-            _dir, _file = os.path.split(fileNames[i])
-            _, _ext = os.path.splitext(_file)
-
-            renameFile(fileNames[i], os.path.join(_dir, newNames[i]+_ext))
-    else:
-        print(f"files and names lengths don't match")
-
-    os.startfile(srcDirName)
+def add_pdf_bookmark():
+    pass
 
 
 if __name__ == '__main__':
-    coverSheetsPath = 'C:\\Users\\cmolina\\Downloads\\submittal\\Cover-Sheet'
-    submittalPath = 'C:\\Users\\cmolina\\Downloads\\submittal'
+    coverSheetsPath = 'C:\\Users\\cmolina\\Downloads\\submittal\\'
+    submittalPath = 'C:\\Users\\cmolina\\Downloads\\submittal\\'
 
-    # merge_pdfs(srcFileNames=sortFileNames(fileNames=getLocalFileNames(coverSheetsPath),
-    #                                       by=getNumberHead),
-    #            dstFileName=f'{submittalPath}\\cover sheets merged.pdf')
+    merge_pdfs2(srcFileNames=sortFileNames(fileNames=getLocalFileNames(coverSheetsPath),
+                                           by=getNumberHead),
+                dstFileName=f'{submittalPath}bookmark test.pdf')
 
     # split_pdf(fileName='C:\\Users\\cmolina\\Downloads\\submittal\\Cover-Sheet-PLC3-network.pdf',
     #           dstDirName='C:\\Users\\cmolina\\Downloads\\submittal\\Cover-Sheet')
 
     # print(getSheetNames('C:\\Users\\cmolina\\Downloads\\submittal\\Cover-Sheet-PLC3-network.xlsx'))
-
