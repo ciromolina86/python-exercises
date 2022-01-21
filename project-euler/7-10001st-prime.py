@@ -41,7 +41,6 @@ def primeNumberGenerator():
         idx = len(primes)
 
 
-
 def sieveOfEratosthenes(n=11):
     """
     The sieve of Eratosthenes: find all the prime numbers less than or equal to n
