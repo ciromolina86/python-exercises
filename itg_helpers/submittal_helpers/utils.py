@@ -74,11 +74,17 @@ def getNumberHead(fileName):
     :param fileName:
     :return:
     """
-    pattern = '([0-9]+).([0-9]+).([0-9]+)'
-    result = re.search(pattern, fileName)
-    idx1, idx2, idx3 = result.group(1), result.group(2), result.group(3)
+    idx1 = idx2 = idx3 = idx4 = 0
 
-    return int(idx1), int(idx2), int(idx3)
+    match = re.search(r'([0-9]+)\.([0-9]+)\.([0-9]+)\.*([0-9]+)*', fileName)
+
+    if match:
+        idx1, idx2, idx3, idx4 = match.group(1), match.group(2), match.group(3), match.group(4)
+        if idx4 is None:
+            idx4 = 0
+        return int(idx1), int(idx2), int(idx3), int(idx4)
+    else:
+        return int(idx1), int(idx2), int(idx3), int(idx4)
 
 
 def sortFileNames(fileNames, asc=True, by=None):
@@ -105,7 +111,7 @@ def renameFile(srcFileName, dstFileName):
 if __name__ == '__main__':
     # fileName = 'C:\\Users\\cmolina\\Downloads\\test spreadsheet.xlsx'
     # dirName, _ = os.path.split(fileName)
-    dirName = 'C:\\Users\\cmolina\\Downloads\\submittal\\Cover-Sheet'
+    dirName = 'C:\\Users\\cmolina\\Downloads\\submittal\\'
 
     files = getLocalFileNames(dirName)
     sortedFiles = sortFileNames(files, by=getNumberHead)
