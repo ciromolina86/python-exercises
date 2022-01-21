@@ -76,7 +76,7 @@ def getNumberHead(fileName):
     """
     idx1 = idx2 = idx3 = idx4 = 0
 
-    match = re.search(r'([0-9]+)\.([0-9]+)\.([0-9]+)\.*([0-9]+)*', fileName)
+    match = re.search(r'([0-9]+)\.*([0-9]+)*\.*([0-9]+)*\.*([0-9]+)*', fileName)
 
     if match:
         idx1, idx2, idx3, idx4 = match.group(1), match.group(2), match.group(3), match.group(4)
@@ -106,6 +106,21 @@ def renameFile(srcFileName, dstFileName):
     :return:
     """
     os.rename(srcFileName, dstFileName)
+
+
+def rename_files(srcDirName: str, newNames: list):
+    fileNames = sortFileNames(getLocalFileNames(srcDirName), by=getNumberTail)
+
+    if len(fileNames) == len(newNames):
+        for i in range(len(fileNames)):
+            _dir, _file = os.path.split(fileNames[i])
+            _, _ext = os.path.splitext(_file)
+
+            renameFile(fileNames[i], os.path.join(_dir, newNames[i] + _ext))
+    else:
+        print(f"files and names lengths don't match")
+
+    os.startfile(srcDirName)
 
 
 if __name__ == '__main__':
