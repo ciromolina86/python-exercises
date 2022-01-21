@@ -67,10 +67,6 @@ def split_pdf(fileName, dstDirName):
     os.startfile(dstDirName)
 
 
-def add_pdf_bookmark():
-    pass
-
-
 if __name__ == '__main__':
     coverSheetsPath = 'C:\\Users\\cmolina\\Downloads\\submittal\\'
     submittalPath = 'C:\\Users\\cmolina\\Downloads\\submittal\\'
