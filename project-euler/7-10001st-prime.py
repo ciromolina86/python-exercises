@@ -28,12 +28,18 @@ def isPrime(arg):
 
 def primeNumberGenerator():
     """generate an infinite sequence of prime numbers"""
-    number = 2
+    limit = inc = 1_000_000
+    idx = 0
 
     while True:
-        if isPrime(number):
-            yield number
-        number += 1
+        primes = sieveOfEratosthenes(limit)
+
+        for prime in primes[idx:limit]:
+            yield prime
+
+        limit += inc
+        idx = len(primes)
+
 
 
 def sieveOfEratosthenes(n=11):
@@ -101,12 +107,13 @@ if __name__ == '__main__':
     # print(sieveOfEratosthenes(1000000))  # 0.151100 seconds
     # print(sieveOfAtkin(1000000))  # 0.436244 seconds
 
-    prime = primeNumberGenerator()
-    nth = 100001
+    primes = primeNumberGenerator()
+    nth = 10_001
     for i in range(1, nth + 1):
-        num = next(prime)
+        prime = next(primes)
+        # print(f'{i}th - {prime}')
         if i == nth:
-            print(f'{i}th prime = {num}')
+            print(f'{i}th prime = {prime}')
 
     end = time.time()
     print(f"{(end - start):.6f} seconds")
