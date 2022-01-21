@@ -98,15 +98,15 @@ if __name__ == '__main__':
 
     start = time.time()
 
-    # print(sieveOfEratosthenes(1000000))
-    print(sieveOfAtkin(1000000))
+    # print(sieveOfEratosthenes(1000000))  # 0.151100 seconds
+    # print(sieveOfAtkin(1000000))  # 0.436244 seconds
 
-    # prime = primeNumberGenerator()
-    # nth = 100001
-    # for i in range(1, nth + 1):
-    #     num = next(prime)
-    #     if i == nth:
-    #         print(f'{i}th prime = {num}')
+    prime = primeNumberGenerator()
+    nth = 100001
+    for i in range(1, nth + 1):
+        num = next(prime)
+        if i == nth:
+            print(f'{i}th prime = {num}')
 
     end = time.time()
     print(f"{(end - start):.6f} seconds")
