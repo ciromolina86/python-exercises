@@ -4,7 +4,7 @@ Problem 5
 
 What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?
 """
-
+import math
 import numpy as np
 
 
@@ -12,21 +12,19 @@ def isMultiple(mul, of):
     return mul % of == 0
 
 
-def smallestMultipleOfNumbers(start=1, stop=10):
-    smallestMultiple = 0
-    isMultipleMask = [False for x in range(start, stop + 1)]
+def leastCommonMultiple(start=1, stop=10):
+    """
+    Get the smallest number that can be divided by each of the numbers from start to stop
 
-    for mul in range(stop, stop ** 10, stop):
-        smallestMultiple = mul
+                   |a * b|
+    lcm(a, b) =  -----------
+                  gcd(a, b)
+    """
+    smallestMultiple = 1
 
-        for num in range(start, stop + 1):
-            if isMultiple(mul=mul, of=num):
-                isMultipleMask[num - 1] = True
-
-        if isMultipleMask == [True for x in range(start, stop + 1)]:
-            return smallestMultiple
-        else:
-            isMultipleMask = [False for x in range(start, stop + 1)]
+    for i in range(start, stop+1):
+        smallestMultiple *= i // math.gcd(i, smallestMultiple)
+    return smallestMultiple
 
 
 if __name__ == '__main__':
@@ -34,7 +32,8 @@ if __name__ == '__main__':
 
     start = time.time()
 
-    print(smallestMultipleOfNumbers(start=1, stop=10))
+    print(leastCommonMultiple(start=1, stop=20))
+    print(math.lcm())
 
     end = time.time()
     print(f"{end - start} seconds")
