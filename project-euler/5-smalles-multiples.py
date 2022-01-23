@@ -14,17 +14,19 @@ def isMultiple(mul, of):
 
 def leastCommonMultiple(start=1, stop=10):
     """
-    Get the smallest number that can be divided by each of the numbers from start to stop
+    Get the smallest number that can be divided by each of the numbers from start to stop,
+    a.k.a least common multiple (lcm)
 
-                   |a * b|
-    lcm(a, b) =  -----------
-                  gcd(a, b)
+    If none of a1,a2,...,ar is zero, then
+    lcm(a1,a2,...,ar) = lcm(lcm(a1,a2,...,ar-1), ar)
+    source: https://en.wikipedia.org/wiki/Least_common_multiple
     """
-    smallestMultiple = 1
+    lcm = 1
 
-    for i in range(start, stop+1):
-        smallestMultiple *= i // math.gcd(i, smallestMultiple)
-    return smallestMultiple
+    for i in range(start, stop + 1):
+        lcm = math.lcm(i, lcm)
+
+    return lcm
 
 
 if __name__ == '__main__':
@@ -33,7 +35,6 @@ if __name__ == '__main__':
     start = time.time()
 
     print(leastCommonMultiple(start=1, stop=20))
-    print(math.lcm())
 
     end = time.time()
     print(f"{end - start} seconds")
