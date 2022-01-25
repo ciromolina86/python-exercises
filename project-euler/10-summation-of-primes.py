@@ -31,7 +31,7 @@ def sieveOfEratosthenes(n=11):
 
 
 def summationOfPrimesLessThan(limit=2_000_000):
-    return np.sum(sieveOfEratosthenes(limit))
+    return sum(sieveOfEratosthenes(limit))
 
 
 if __name__ == '__main__':
