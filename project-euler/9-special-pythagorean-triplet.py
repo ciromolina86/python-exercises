@@ -62,7 +62,12 @@ def getPythagoreanTripletPerimeter(perimeter=1000):
 
 
 if __name__ == '__main__':
+    start = time.time()
+
     pythagoreanTriplet = getPythagoreanTripletPerimeter(1000)
     print(f'{isPythagoreanTriplet(pythagoreanTriplet[0][0], pythagoreanTriplet[0][1], pythagoreanTriplet[0][2])}')
     print(f'the pythagorean triplet where the sum of all elements is 1000 is {pythagoreanTriplet}')
     print(f'the product of the pythagorean triplet is {np.prod(pythagoreanTriplet)}')
+
+    end = time.time()
+    print(f"{(end - start):.6f} seconds")
