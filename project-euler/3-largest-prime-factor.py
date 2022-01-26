@@ -23,18 +23,12 @@ def isPrime(arg):
         return True
 
 
-def findAllFactors(arg):
+def getFactors(arg):
     """find all the factors of a given number"""
-    allFactors = []
-
-    for num in range(1, arg + 1):
-        if arg % num == 0:
-            allFactors.append(num)
-
-    return allFactors
+    return [num for num in range(1, arg + 1) if arg % num == 0]
 
 
-def findPrimeNumbers(limit):
+def getPrimeNumbers(limit):
     """generate all primes smaller than or equal to n using Sieve of Eratosthenes"""
     primeMask = [True for i in range(limit + 1)]
     prime = 2
@@ -49,7 +43,7 @@ def findPrimeNumbers(limit):
     return [x for x in range(2, limit + 1) if primeMask[x]]
 
 
-def findPrimeFactors(arg, primes=None):
+def getPrimeFactors(arg, primes=None):
     """find all the prime factors of a number using prime factorization by division"""
 
     if primes is None:
@@ -63,7 +57,7 @@ def findPrimeFactors(arg, primes=None):
         primes.append(arg)
         return primes
 
-    return findPrimeFactors(arg / num, primes)
+    return getPrimeFactors(arg // num, primes)
 
 
 if __name__ == '__main__':
@@ -71,11 +65,7 @@ if __name__ == '__main__':
 
     start = time.time()
 
-    # 600851475143 13195
-    # print(isPrime(13195))
-    # print(findAllFactors(13195))
-    # print(findPrimeNumbers(13195))
-    print(findPrimeFactors(600851475143))
+    print(getPrimeFactors(600851475143))
 
     end = time.time()
     print(f"{end - start} seconds")
